@@ -7,7 +7,151 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <!-- TITLE SCREEN -->
+        <div id="titleScreen" class="screen active">
+            <div class="title-logo">SOULFALL</div>
+            <div class="title-subtitle">Dark Fantasy Action RPG</div>
+            <div class="title-buttons">
+                <button class="btn" id="newGameBtn">New Game</button>
+                <button class="btn" id="continueBtn" disabled>Continue</button>
+                <button class="btn" id="resetBtn">Reset Save</button>
+            </div>
+        </div>
+
+        <!-- CLASS SELECTION SCREEN -->
+        <div id="classScreen" class="screen">
+            <div class="class-select-title">Choose Your Class</div>
+            <div class="class-grid" id="classGrid"></div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen" class="screen">
+            <div class="game-container">
+                <canvas id="gameCanvas"></canvas>
+                
+                <div class="hud">
+                    <!-- Top HUD -->
+                    <div class="hud-top">
+                        <div class="hud-left">
+                            <div class="stat-bar">
+                                <div class="stat-label">HP</div>
+                                <div class="stat-fill" style="width: 100%;"></div>
+                            </div>
+                            <div class="stat-bar" id="manaBar" style="background: rgba(50, 80, 150, 0.7); border-color: #4488ff;">
+                                <div class="stat-label">Mana</div>
+                                <div class="stat-fill" style="background: linear-gradient(90deg, #4488ff 0%, #88ccff 100%); width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="hud-right">
+                            <div class="soul-indicator">
+                                <span id="soulPowerDisplay">Soul: 0</span>
+                            </div>
+                            <div class="stat-bar" style="border-color: #8844ff;">
+                                <div class="stat-label">Corruption</div>
+                                <div class="corruption-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quest Tracker -->
+                    <div class="quest-tracker">
+                        <div class="quest-title">Quest Name</div>
+                        <div class="quest-objective">Quest objective...</div>
+                    </div>
+
+                    <!-- Boss HP Bar -->
+                    <div class="boss-hp-bar">
+                        <div class="boss-name">Boss</div>
+                        <div class="boss-hp-fill" style="width: 100%;"></div>
+                    </div>
+
+                    <!-- Joystick -->
+                    <div class="controls">
+                        <div class="joystick">
+                            <div class="joystick-thumb" id="joystickThumb" style="left: 50%; top: 50%; transform: translate(-50%, -50%);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Buttons -->
+                    <div class="skill-buttons">
+                        <button class="skill-btn ready">Sk1<div class="skill-cooldown-overlay"></div></button>
+                        <button class="skill-btn ready">Sk2<div class="skill-cooldown-overlay"></div></button>
+                        <button class="skill-btn ready">Sk3<div class="skill-cooldown-overlay"></div></button>
+                        <button class="skill-btn ready">Sk4<div class="skill-cooldown-overlay"></div></button>
+                    </div>
+
+                    <!-- Ultimate Button -->
+                    <button class="ultimate-btn ready">ULT</button>
+
+                    <!-- Pause Button -->
+                    <button id="pauseBtn" style="position: absolute; top: 20px; right: 20px; padding: 8px 16px; background: #333; border: 1px solid #666; color: #fff; cursor: pointer; border-radius: 3px; pointer-events: auto; z-index: 101;">PAUSE</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- INVENTORY SCREEN -->
+        <div id="inventoryScreen" class="screen">
+            <div class="screen-header">
+                <div class="screen-title">Inventory</div>
+                <button class="back-btn" id="backFromInventoryBtn">Back</button>
+            </div>
+            
+            <div class="equipment-section">
+                <div class="section-title">Equipment</div>
+                <div class="equipment-grid">
+                    <div class="equipment-slot empty" id="weaponSlot">
+                        <div class="slot-label">Weapon</div>
+                        <div style="color: #666;">Empty</div>
+                    </div>
+                    <div class="equipment-slot empty" id="armorSlot">
+                        <div class="slot-label">Armor</div>
+                        <div style="color: #666;">Empty</div>
+                    </div>
+                    <div class="equipment-slot empty" id="helmSlot">
+                        <div class="slot-label">Helm</div>
+                        <div style="color: #666;">Empty</div>
+                    </div>
+                    <div class="equipment-slot empty" id="glovesSlot">
+                        <div class="slot-label">Gloves</div>
+                        <div style="color: #666;">Empty</div>
+                    </div>
+                    <div class="equipment-slot empty" id="legsSlot">
+                        <div class="slot-label">Legs</div>
+                        <div style="color: #666;">Empty</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-section">
+                <div class="section-title">Inventory</div>
+                <div class="inventory-list" id="inventoryList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHOICE MODAL -->
+    <div id="choiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Important Choice</div>
+            <div class="modal-desc" id="choiceDesc">You face a decision...</div>
+            <div class="choice-buttons"></div>
+        </div>
+    </div>
+
+    <!-- PAUSE MENU -->
+    <div id="pauseMenu">
+        <div class="pause-panel">
+            <div class="pause-title">PAUSED</div>
+            <div class="pause-buttons">
+                <button class="pause-btn" id="resumeBtn">Resume</button>
+                <button class="pause-btn" id="inventoryBtn">Inventory</button>
+                <button class="pause-btn" id="saveBtn">Save Game</button>
+                <button class="pause-btn" id="quitBtn">Quit to Title</button>
+            </div>
+        </div>
+    </div>
+
     <script src="data.js"></script>
     <script src="save.js"></script>
     <script src="player.js"></script>
